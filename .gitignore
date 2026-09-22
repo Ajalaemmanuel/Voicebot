@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.env
+*.egg-info/
+
+# Intermediate raw recordings — only the final OGG/MP3 in calls/ is kept for submission.
+calls/**/audio.wav

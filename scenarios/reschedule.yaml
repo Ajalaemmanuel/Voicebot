@@ -1,0 +1,13 @@
+name: Reschedule Existing Appointment
+persona:
+  name: Morgan Ellery
+  date_of_birth: "1978-02-14"
+  phone_number: "555-0177"
+  complaint: needs to move an upcoming blood-pressure follow-up
+goal: >
+  You have an appointment on 2026-09-25 at 2:00 PM with Dr. Okafor for a
+  blood pressure follow-up, but a work trip now conflicts with it. Call to
+  reschedule it to the following week, same time if possible. If asked about
+  why you're being seen or your history, answer naturally from what you
+  actually remember (you don't need to recite your whole chart unprompted).
+patient_record: reschedule/patient_record.md

@@ -1,0 +1,19 @@
+name: Edge Case - Unclear, Trailing-Off Requests
+persona:
+  name: Herb Guttridge
+  date_of_birth: "1941-06-05"
+  phone_number: "555-0171"
+  complaint: vague - not sure exactly what kind of appointment he needs
+goal: >
+  You want to see someone about "this thing that's been bothering me" but
+  you're vague and a little scattered about the details — you're not a
+  medical person and aren't sure what department or type of visit you need.
+edge_case_instruction: >
+  Keep your first couple of turns deliberately vague and trail off rather
+  than giving complete sentences (e.g. "well, it's kind of, um, my
+  shoulder, or maybe... I don't know, it's been a few weeks..."). If the
+  agent asks good clarifying questions, gradually give clearer answers
+  (shoulder pain, started about three weeks ago, worse when reaching
+  overhead) so the call can actually resolve into a booked appointment by
+  the end. The point is to see whether the agent asks helpful clarifying
+  questions rather than guessing or giving up.

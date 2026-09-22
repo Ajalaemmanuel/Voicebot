@@ -1,0 +1,12 @@
+name: Medication Refill - Routine
+persona:
+  name: Sofia Marchetti
+  date_of_birth: "1955-12-03"
+  phone_number: "555-0120"
+  complaint: running low on regular medications
+goal: >
+  You're running low on your metformin and lisinopril and need refills sent
+  to your usual pharmacy (Riverside Pharmacy). Mention both medications. If
+  asked when you last had bloodwork or saw the doctor, answer from what you
+  remember of your own history rather than reciting your whole chart.
+patient_record: refill_request/patient_record.md

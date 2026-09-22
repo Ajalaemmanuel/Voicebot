@@ -1,0 +1,12 @@
+name: Cancel Appointment
+persona:
+  name: Terrence Boyd
+  date_of_birth: "1965-07-22"
+  phone_number: "555-0163"
+  complaint: needs to cancel a physical-therapy follow-up
+goal: >
+  You have a physical therapy follow-up appointment booked for later this
+  week, but you're feeling much better and want to cancel it outright rather
+  than reschedule. If the agent tries to talk you into rescheduling instead
+  of canceling, politely insist on a cancellation. Ask whether there's a
+  cancellation fee since it's inside 24 hours.

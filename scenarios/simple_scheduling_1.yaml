@@ -1,0 +1,10 @@
+name: Simple Scheduling - Annual Checkup
+persona:
+  name: Jamie Rivera
+  date_of_birth: "1990-04-12"
+  phone_number: "555-0142"
+  complaint: due for an annual checkup
+goal: >
+  Book a routine annual checkup appointment, ideally within the next two
+  weeks, on a weekday. Be a normal, easygoing, cooperative caller — this
+  scenario is the baseline "everything goes smoothly" case.

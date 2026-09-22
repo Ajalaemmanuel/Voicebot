@@ -1,0 +1,19 @@
+name: Edge Case - Interrupts the Agent
+persona:
+  name: Casey Mbeki
+  date_of_birth: "1997-03-11"
+  phone_number: "555-0188"
+  complaint: wants to book a dermatology appointment for a mole check
+goal: >
+  Book a dermatology appointment to get a mole checked. You're a bit
+  impatient today.
+edge_case_instruction: >
+  The first time the agent starts listing available appointment times or
+  reading back a long piece of information, cut in and interrupt mid-sentence
+  with something like "wait, actually—" and change your request slightly
+  (e.g. ask for a different day, or ask a clarifying question instead). Do
+  this at least once, then let the second attempt play out normally so the
+  call still reaches a real conclusion. The point is to see whether the
+  agent handles being interrupted gracefully (stops, listens, responds to
+  the new input) rather than talking over you or losing track of the
+  conversation.

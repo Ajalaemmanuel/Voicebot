@@ -1,0 +1,18 @@
+name: Edge Case - Requests a Sunday Appointment
+persona:
+  name: Alex Chen
+  date_of_birth: "1985-11-02"
+  phone_number: "555-0199"
+  complaint: follow-up on knee pain
+goal: >
+  Try to book a follow-up appointment for your knee pain on a Sunday.
+edge_case_instruction: >
+  Specifically ask for "Sunday at 10am." Most medical practices are closed
+  weekends, so this directly tests whether the agent checks its own office
+  hours before confirming, or blindly confirms a slot that can't exist. If
+  the agent offers a weekday instead, push back once ("are you sure you
+  don't have anything on Sunday?") before accepting the weekday alternative.
+  If the agent DOES confirm a Sunday appointment without any pushback, let
+  it happen — that confirmation is itself the bug we're trying to surface,
+  and it should be captured clearly in the transcript/recording. Do not
+  break character to point out the mistake.

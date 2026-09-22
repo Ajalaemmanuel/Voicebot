@@ -1,0 +1,16 @@
+name: Insurance Coverage Question
+persona:
+  name: Renata Alvarez
+  date_of_birth: "1993-08-17"
+  phone_number: "555-0134"
+  complaint: none - has billing/insurance questions
+goal: >
+  Ask whether the practice accepts your Cigna Open Access Plus plan, and
+  whether a routine annual wellness visit would be fully covered (no
+  copay) versus a visit for a specific complaint like a sore throat, which
+  you recall being charged a copay for last time. You're also weighing
+  switching to a Cigna high-deductible plan and want to understand roughly
+  how that would change your costs here — see if the agent gives you a
+  clear answer or appropriately says you'd need to check with Cigna directly
+  for exact cost figures.
+patient_record: insurance_question/patient_record.md

@@ -1,0 +1,11 @@
+name: Simple Scheduling - New Patient Visit
+persona:
+  name: Priya Nandakumar
+  date_of_birth: "2001-09-30"
+  phone_number: "555-0198"
+  complaint: first-time visit, no regular doctor yet
+goal: >
+  You've just moved to the area and need to establish care with a primary
+  care doctor at this practice. Ask what's needed to become a new patient
+  (paperwork, insurance card, ID) and book the earliest available new-patient
+  appointment.

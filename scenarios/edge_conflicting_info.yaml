@@ -1,0 +1,14 @@
+name: Edge Case - Conflicting Contact Info
+persona:
+  name: Lindsey Farrow
+  date_of_birth: "1992-01-15"
+  phone_number: "555-0146"
+  complaint: needs a migraine follow-up and a sumatriptan refill
+goal: >
+  Book a follow-up for ongoing migraines and ask for a sumatriptan refill.
+  When asked to verify your phone number, give your current number
+  (555-0146) confidently, even if the agent reads back a different, older
+  number from its records. Don't volunteer that there might be two numbers
+  on file — see whether the agent notices the mismatch and asks a
+  clarifying/verifying question, or just proceeds without reconciling it.
+patient_record: edge_conflicting_info/patient_record.md
