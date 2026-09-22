@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import json
 import logging
 import os
 import subprocess
@@ -34,6 +35,7 @@ logger = logging.getLogger("voicebot.run")
 
 AGENT_NAME = "patient-tester"
 SIP_PARTICIPANT_IDENTITY = "test-line"
+CALLS_DIR = Path(__file__).parent / "calls"
 
 
 class LiveKitApiCallClient(LiveKitCallClient):
@@ -49,9 +51,14 @@ class LiveKitApiCallClient(LiveKitCallClient):
         await self._api.room.create_room(lkapi.CreateRoomRequest(name=name))
 
     async def dispatch_agent(self, room_name: str, scenario_path: str) -> None:
+        # room_name doubles as the call_id / calls/<call_id> folder name, so
+        # the orchestrator-side outcome (run_result.json, written below in
+        # run_one_call) and the agent-side artifacts (transcript/audio/
+        # metadata.json, written by agent.py) always land in the same place.
+        metadata = json.dumps({"scenario_path": scenario_path, "call_id": room_name})
         await self._api.agent_dispatch.create_dispatch(
             lkapi.CreateAgentDispatchRequest(
-                room=room_name, agent_name=self._agent_name, metadata=scenario_path
+                room=room_name, agent_name=self._agent_name, metadata=metadata
             )
         )
 
@@ -133,12 +140,24 @@ async def run_one_call(scenario_path: str, max_seconds: float, agent_client: Liv
         max_seconds=max_seconds,
     )
 
+    call_dir = CALLS_DIR / room_name
+    call_dir.mkdir(parents=True, exist_ok=True)
+    (call_dir / "run_result.json").write_text(
+        json.dumps(
+            {
+                "room_name": room_name,
+                "scenario_slug": scenario.slug,
+                "outcome": result.outcome.value,
+                "duration_seconds": result.duration_seconds,
+                "error": result.error,
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
     if result.outcome == CallOutcome.COMPLETED:
-        logger.info(
-            "Call completed (%.0fs). Artifacts are under calls/%s-<timestamp>/",
-            result.duration_seconds,
-            scenario.slug,
-        )
+        logger.info("Call completed (%.0fs). Artifacts are under calls/%s/", result.duration_seconds, room_name)
     else:
         logger.error(
             "Call did not complete normally: outcome=%s error=%s",

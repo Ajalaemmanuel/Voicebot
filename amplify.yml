@@ -1,0 +1,25 @@
+# AWS Amplify Hosting build spec for the web/ dashboard (monorepo app root).
+# Connect this GitHub repo in the Amplify Console, and it will auto-detect
+# this file. `npm run build` runs web/scripts/sync-data.mjs first (see
+# web/package.json), which copies scenarios/, calls/, and bug_report/BUGS.md
+# into web/data/ so the deployed app is self-contained — no S3 bucket, no
+# AWS credentials, no environment variables needed. See docs/SECURITY.md.
+version: 1
+applications:
+  - appRoot: web
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm ci
+        build:
+          commands:
+            - npm run build
+      artifacts:
+        baseDirectory: .next
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - node_modules/**/*
+          - .next/cache/**/*

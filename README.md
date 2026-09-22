@@ -118,11 +118,12 @@ trunk. When the call ends (or hits `MAX_CALL_SECONDS`, default 240s), you'll
 find the results in:
 
 ```
-calls/simple_scheduling_1-<timestamp>/
+calls/simple_scheduling_1-<8-char-id>/
   audio.ogg          # both sides of the call
   transcript.txt      # human-readable, timestamped
   transcript.json      # structured, same data
-  metadata.json         # scenario, providers/models used, duration, outcome
+  metadata.json         # scenario, providers/models used, duration (written by agent.py)
+  run_result.json        # outcome/duration/error as seen by the orchestrator (written by run.py)
 ```
 
 ## 7. Run the full batch (10+ calls, F9)
@@ -160,5 +161,14 @@ docs/                                   # PRD, requirements, technical design, d
   read it from `TEST_LINE_NUMBER` in `.env`, which defaults to it; don't
   point it elsewhere for submission calls.
 - If a call fails outright (no answer, SIP auth rejected), check
-  `metadata.json` in that call's folder for the recorded `outcome`/`error`
+  `run_result.json` in that call's folder for the recorded `outcome`/`error`
   before assuming the practice's agent is at fault.
+
+## 9. Web dashboard (optional)
+
+[`web/`](web/) is a separate, read-only Next.js dashboard for browsing
+scenarios, call transcripts/recordings, and the bug report in a browser,
+deployable to AWS Amplify Hosting. It holds no provider credentials and
+places no calls — see [`web/README.md`](web/README.md) for local dev and
+deployment steps, and [`docs/SECURITY.md`](docs/SECURITY.md) for the
+security reasoning behind that split.

@@ -47,6 +47,33 @@ CALLS_DIR = Path(__file__).parent / "calls"
 AGENT_NAME = "patient-tester"
 
 
+def parse_job_metadata(raw: str | None) -> tuple[str, str]:
+    """Returns (scenario_path, call_id) from the dispatch metadata run.py
+    sets (see run.py's LiveKitApiCallClient.dispatch_agent). `call_id` is
+    also the folder name under calls/, and matches the room name run.py
+    used, so an orchestrator-side outcome (run_result.json) and the
+    agent-side artifacts (transcript/audio/metadata.json) always land in the
+    same place even across a batch of same-scenario calls.
+
+    Falls back to VOICEBOT_DEFAULT_SCENARIO for local `agent.py console`
+    testing, where there's no real dispatch metadata.
+    """
+    if raw:
+        try:
+            payload = json.loads(raw)
+            return payload["scenario_path"], payload["call_id"]
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    fallback_scenario = os.environ.get("VOICEBOT_DEFAULT_SCENARIO")
+    if not fallback_scenario:
+        raise RuntimeError(
+            "Job was dispatched without valid {'scenario_path','call_id'} "
+            "metadata, and no VOICEBOT_DEFAULT_SCENARIO fallback is set for "
+            "local testing"
+        )
+    return fallback_scenario, f"console-{int(time.time())}"
+
+
 async def _embed_fn(text: str) -> np.ndarray:
     """OpenAI embeddings, adapted to the async signature rag.py expects."""
     model = os.environ.get("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
@@ -89,11 +116,7 @@ class PatientCaller(Agent):
 async def entrypoint(ctx: JobContext) -> None:
     await ctx.connect()
 
-    scenario_path = ctx.job.metadata
-    if not scenario_path:
-        raise RuntimeError(
-            "Job was dispatched without metadata; expected a path to a scenario YAML"
-        )
+    scenario_path, call_id = parse_job_metadata(ctx.job.metadata)
     scenario = load_scenario(scenario_path)
     logger.info("Starting call for scenario %s", scenario.slug)
 
@@ -111,7 +134,7 @@ async def entrypoint(ctx: JobContext) -> None:
         turn_detection=inference.TurnDetector(),
     )
 
-    run_dir = CALLS_DIR / f"{scenario.slug}-{int(time.time())}"
+    run_dir = CALLS_DIR / call_id
     run_dir.mkdir(parents=True, exist_ok=True)
 
     recorder = DualTrackRecorder(sample_rate=SAMPLE_RATE)
@@ -181,6 +204,7 @@ async def entrypoint(ctx: JobContext) -> None:
 
         transcript_writer.write(run_dir)
         metadata = {
+            "call_id": call_id,
             "scenario_file": str(scenario.source_path),
             "scenario_slug": scenario.slug,
             "run_dir": str(run_dir),
